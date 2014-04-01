@@ -7,4 +7,19 @@ html
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
     script(src='bootstrap/js/bootstrap.min.js')
   body
-    block content
+    div.site-wrapper
+        div.site-wrapper-inner
+            div.cover-container
+                div.masthead.clearfix
+                    div.inner
+                        h3.masthead-brand Bobby Hensley dot Com
+                        ul.nav.masthead-nav
+                            li.active: a(href='/') Home
+                            li: a(href='/about') Who Am I?
+                            li: a(href='/contact') Contact Me!
+                    
+                block content
+
+                div.mastfoot
+                    div.inner
+                        p Here's some more text.
