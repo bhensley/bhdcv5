@@ -2,7 +2,14 @@ extends layout
 
 block content
     div.inner.cover
-        h1.cover-heading Contact Bobby Hensley!
-        p.lead Blah blah blah
-        p More blah blah blah
-        p Some more blah blah blah
+        h1.cover-heading Get in Touch with Me!
+        p.lead You know you wanna. ;)
+        form(role="form", method="post")
+            div.form-group
+                input.form-control#subject(type="text", name="subject", placeholder="Give me a one-liner on what you want to discuss")
+            div.form-group
+                input.form-control#email(type="email", name="email", placeholder="Your email address, so I can respond")
+            div.form-group
+                textarea.form-control#body(name="body", placeholder="Tell me more about what you wish to discuss.", rows=5)
+            div.form-group
+                button.btn.btn-default(type="submit") Fire Away!
