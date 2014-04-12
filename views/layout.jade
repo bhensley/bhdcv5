@@ -5,6 +5,7 @@ html
     link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
+    script(src="/javascripts/jquery.blockUI.js")
     script(src='bootstrap/js/bootstrap.min.js')
     script(src='/socket.io/socket.io.js')
     script.
@@ -19,8 +20,28 @@ html
                     contents: $('#body').val()
                 });
 
+                $.blockUI({
+                    message: 'Handling your message now...' ,
+                    css: {
+                        padding: 10,
+                        border: 0,
+                        backgroundColor: "#000",
+                        '-webkit-border-radius': '8px',
+                        '-moz-border-radius': '8px',
+                        opacity: .5,
+                        color: "#fff" 
+                    }
+                });
+
                 socket.on('form-done', function (d) {
-                    console.log(d.done);
+                    if(d.success) {
+                        $('.blockUI.blockMsg.blockPage').text('All set!');
+                        $('#csub').attr('disabled', 'disabled');
+                        setTimeout($.unblockUI, 2000);
+                    } else {
+                        $('.blockUI.blockMsg.blockPage').text('Ran into an issue... try again?!');
+                        setTimeout($.unblockUI, 2000);
+                    }
                 });
             });
         });

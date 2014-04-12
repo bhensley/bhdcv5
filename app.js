@@ -44,6 +44,9 @@ serv.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+/**
+ * This will be called when the email
+ */
 io.sockets.on('connection', function (socket) {
   socket.on('form-data', function (data, cb) {
     var eServer = email.server.connect({
@@ -65,8 +68,7 @@ io.sockets.on('connection', function (socket) {
       }
 
       socket.emit('form-done', {
-        done: 'Done',
-        data: data
+        success: true
       });
     });
   });
