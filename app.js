@@ -35,6 +35,18 @@ app.get('/', routes.index);
 app.get('/about', routes.about);
 app.get('/contact', routes.contact);
 
-http.createServer(app).listen(app.get('port'), function(){
+var serv = http.createServer(app);
+var io = require('socket.io').listen(serv);
+
+serv.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+io.sockets.on('connection', function (socket) {
+  socket.on('form-data', function (data, cb) {
+    socket.emit('form-done', {
+      done: 'Done',
+      data: data
+    });
+  });
 });

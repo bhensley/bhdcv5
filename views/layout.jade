@@ -6,6 +6,26 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js')
     script(src='bootstrap/js/bootstrap.min.js')
+    script(src='/socket.io/socket.io.js')
+    script.
+        $(document).ready(function () {
+            var socket = io.connect('http://localhost'); 
+            
+            
+            $('#csub').on('click', function (e) {
+                e.preventDefault();
+
+                socket.emit('form-data', {
+                    subject: $('#subject').val(),
+                    email: $('#email').val(),
+                    contents: $('#body').val()
+                });
+            });
+
+            socket.on('form-done', function (d) {
+                console.log(d.done);
+            });
+        });
   body
     div.site-wrapper
         div.site-wrapper-inner
