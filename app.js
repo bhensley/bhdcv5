@@ -1,4 +1,4 @@
-/**
+*
  * Module dependencies.
  */
 
@@ -36,15 +36,15 @@ if ('development' == app.get('env')) {
 /**
  * Handle our routes
  */
-app.get('/', routes.index);
+/*app.get('/', routes.index);
 app.get('/about', routes.about);
-app.get('/contact', routes.contact);
+app.get('/contact', routes.contact);*/
 
 
 /**
  * Socket.io implementation for our contact form.
  */
-var serv = http.createServer(app);
+/*var serv = http.createServer(app);
 var io = require('socket.io').listen(serv);
 
 serv.listen(app.get('port'), function(){
