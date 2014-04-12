@@ -5,9 +5,11 @@
 
 var express = require('express'),
   http      = require('http'),
-  path      = require('path');
+  path      = require('path'),
+  email     = require('emailjs');
 
-var routes  = require('./routes');
+var routes  = require('./routes'),
+  config    = require('./config');
 
 var app = express();
 
@@ -44,9 +46,28 @@ serv.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function (socket) {
   socket.on('form-data', function (data, cb) {
-    socket.emit('form-done', {
-      done: 'Done',
-      data: data
+    var eServer = email.server.connect({
+      user: config.email.username,
+      password: config.email.password,
+      host: config.email.server_address,
+      ssl: config.email.enable_ssl
+    });
+
+    eServer.send({
+      text: data.contents + "\n\n\nSent By: " + data.email,
+      from: 'Your Emailer',
+      to: config.email.username,
+      subject: data.subject
+    }, function (err, msg) {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      socket.emit('form-done', {
+        done: 'Done',
+        data: data
+      });
     });
   });
 });
