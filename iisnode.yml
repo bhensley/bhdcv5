@@ -2,7 +2,7 @@
 
 loggingEnabled: true
 debuggingEnabled: true
-devErrorsEnabled: true
+devErrorsEnabled: false
 node_env: development
 # nodeProcessCountPerApplication: 1
 # maxConcurrentRequestsPerProcess: 1024
