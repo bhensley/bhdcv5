@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -33,10 +32,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
+/**
+ * Handle our routes
+ */
 app.get('/', routes.index);
 app.get('/about', routes.about);
 app.get('/contact', routes.contact);
 
+
+/**
+ * Socket.io implementation for our contact form.
+ */
 var serv = http.createServer(app);
 var io = require('socket.io').listen(serv);
 
@@ -44,11 +51,10 @@ serv.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-/**
- * This will be called when the email
- */
+// This will be called only when the contact form has been submitted
 io.sockets.on('connection', function (socket) {
   socket.on('form-data', function (data, cb) {
+    // Set up configuration for SMTP server
     var eServer = email.server.connect({
       user: config.email.username,
       password: config.email.password,
@@ -56,6 +62,7 @@ io.sockets.on('connection', function (socket) {
       ssl: config.email.enable_ssl
     });
 
+    // Send the email
     eServer.send({
       text: data.contents + "\n\n\nSent By: " + data.email,
       from: 'Your Emailer',
@@ -67,6 +74,7 @@ io.sockets.on('connection', function (socket) {
         return;
       }
 
+      // Email sent successfully, tell that to the client
       socket.emit('form-done', {
         success: true
       });
