@@ -164,3 +164,7 @@ body {
 textarea, input, button, a.btn {
   opacity: 0.7;
 }
+
+.cover-container > .cover.inner {
+  text-shadow: 2px 2px 3px #000, -2px -2px 1px #000;
+}
