@@ -8,9 +8,18 @@ var express = require('express'),
   email     = require('emailjs');
 
 var routes  = require('./routes'),
-  config    = require('./config');
+  config    = require('./config')
+  contact   = require('./contact_helper.js');
 
 var app = express();
+
+// Set up configuration for SMTP server
+var eServer = email.server.connect({
+  user:     config.email.username,
+  password: config.email.password,
+  host:     config.email.server_address,
+  ssl:      config.email.enable_ssl
+});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -54,30 +63,29 @@ serv.listen(app.get('port'), function(){
 // This will be called only when the contact form has been submitted
 io.sockets.on('connection', function (socket) {
   socket.on('form-data', function (data, cb) {
-    // Set up configuration for SMTP server
-    var eServer = email.server.connect({
-      user: config.email.username,
-      password: config.email.password,
-      host: config.email.server_address,
-      ssl: config.email.enable_ssl
-    });
+    var validContact = contact.valid_contact_form(data.subject, data.contents);
 
-    // Send the email
-    eServer.send({
-      text: data.contents + "\n\n\nSent By: " + data.email,
-      from: 'Your Emailer',
-      to: config.email.username,
-      subject: data.subject
-    }, function (err, msg) {
-      if (err) {
-        console.log(err);
-        return;
-      }
+    if (validContact) {
+      // Send the email
+      eServer.send({
+        text: data.contents + "\n\n\nSent By: " + data.email,
+        from: 'Your Emailer',
+        to: config.email.username,
+        subject: data.subject
+      }, function (err, msg) {
+        if (err) {
+          return;
+        }
 
-      // Email sent successfully, tell that to the client
-      socket.emit('form-done', {
-        success: true
+        // Email sent successfully, tell that to the client
+        socket.emit('form-done', {
+          success: true
+        });
       });
-    });
+    } else {
+      socket.emit('form-done', {
+        success: false
+      });
+    }
   });
 });
