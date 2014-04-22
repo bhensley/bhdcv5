@@ -9,12 +9,12 @@ html
     script(src='bootstrap/js/bootstrap.min.js')
     script(src='/socket.io/socket.io.js')
     script.
-        var bg = 1 + Math.floor(Math.random() * 15);
-
         $(document).ready(function () {
 
             // If we're using a normal browser let's apply a background image.
             if ($(window).width() >= 768) {
+                var bg = 1 + Math.floor(Math.random() * 11);
+
                 $('html, body')
                     .css('background', 'transparent url(/images/' + bg + '.jpg) center center no-repeat')
                     .css('background-size', 'cover')
