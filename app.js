@@ -7,18 +7,18 @@ var express = require('express'),
   path      = require('path'),
   email     = require('emailjs');
 
-var routes  = require('./routes'),
-  config    = require('./config')
-  contact   = require('./contact_helper.js');
+var routes   =  require('./routes'),
+  config        =  require('./config'),
+  contact      = require('./contact_helper.js');
 
 var app = express();
 
 // Set up configuration for SMTP server
 var eServer = email.server.connect({
-  user:     config.email.username,
-  password: config.email.password,
-  host:     config.email.server_address,
-  ssl:      config.email.enable_ssl
+  user:     '', //config.email.username,
+  password: '', //config.email.password,
+  host:     '', //config.email.server_address,
+  ssl:      '', //config.email.enable_ssl
 });
 
 // all environments
