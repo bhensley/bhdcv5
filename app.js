@@ -8,7 +8,7 @@ var express = require('express'),
   email     = require('emailjs');
 
 var routes   =  require('./routes'),
-  config        =  require('./config'),
+  //config        =  require('./config'),
   contact      = require('./contact_helper.js');
 
 var app = express();
