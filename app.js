@@ -3,8 +3,8 @@
  */
 var express = require('express'),
   http      = require('http'),
-  path      = require('path'),
-  email     = require('emailjs');
+  path     = require('path'),
+  email   = require('emailjs');
 
 var methodOverride = require('method-override'),
   bodyParser = require('body-parser'),
