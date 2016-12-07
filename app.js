@@ -1,11 +1,14 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
   http      = require('http'),
   path      = require('path'),
   email     = require('emailjs');
+
+var methodOverride = require('method-override'),
+  bodyParser = require('body-parser'),
+  errorHandler = require('errorhandler');
 
 var routes   = require('./routes'),
   contact    = require('./contact_helper.js');
@@ -24,20 +27,14 @@ var eServer = email.server.connect({
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
-app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
+app.use(methodOverride());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  app.use(errorHandler());
 }
 
 

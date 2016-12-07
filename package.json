@@ -6,11 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "~3.5.1",
-    "jade": "~1.3.1",
-    "less-middleware": "~0.1.15",
-    "socket.io": "~0.9.16",
-    "emailjs": "~0.3.8"
+    "express": "*",
+    "jade": "*",
+    "less-middleware": "*",
+    "socket.io": "*",
+    "emailjs": "*"
   },
   "engines": {
     "node": ">=0.12.2",
